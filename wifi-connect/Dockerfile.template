@@ -27,8 +27,9 @@ COPY scripts/start.sh .
 COPY ui ui
 COPY deleteKnownNetworkConnections.py .
 
-RUN cargo build --release
-COPY 
+RUN source source $HOME/.cargo/env \
+    && cargo build --release
+RUN ls -R
 
 ENV DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
