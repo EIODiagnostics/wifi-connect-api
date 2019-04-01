@@ -1,0 +1,15 @@
+KD2 - Shaw
+RT-AC1200_50_2G
+Suki`s Guest
+Waterford2.4ghz
+Parentheses (5 GHz)
+Dollar$
+BraceOpen {
+BraceClosed }
+BracePair { }
+:+1:
+
+
+
+MAR\xc4\xb0GOLD https://bugs.archlinux.org/task/45384
+MARİGOLD_2

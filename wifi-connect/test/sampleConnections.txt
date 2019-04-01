@@ -1,0 +1,9 @@
+NAME                UUID                                  TYPE             DEVICE
+WiFi Connect        52bc1f92-c4b7-418b-8ce8-6abb603e6073  802-11-wireless  wlan0
+Wired connection 1  0c6d7629-1a1e-381d-adaf-81dd7a607efb  802-3-ethernet   eth0
+supervisor0         ae518599-1535-4837-a5ec-9b6df788e009  bridge           supervisor0
+WeWork              77ad151f-eaa4-4793-9866-e345b91996c6  802-11-wireless  --
+With space        77ad151f-eaa4-4793-9866-e345b91996c6  802-11-wireless  --
+long W Guest Network              77ad151f-eaa4-4793-9866-e345b91996c6  802-11-wireless  --
+12345678901234567890123456789012 77ad151f-eaa4-4793-9866-e345b91996c6  802-11-wireless  --
+multiple     spaces 77ad151f-eaa4-4793-9866-e345b91996c6  802-11-wireless  --

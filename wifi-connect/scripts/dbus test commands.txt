@@ -1,0 +1,26 @@
+#!/bin/sh
+NM_SERVICE_NAME="org.freedesktop.NetworkManager"
+NM_OBJECT_PATH="/org/freedesktop/NetworkManager"
+
+DEVICE_IFACE="org.freedesktop.NetworkManager.Device"
+NM_GET_DEVICES="org.freedesktop.NetworkManager.GetDevices"
+DEVICE_WIRELESS_IFACE="org.freedesktop.NetworkManager.Device.Wireless"
+
+NM_GET_ACTIVE_ACCESS_POINT="org.freedesktop.NetworkManager.ActiveAccessPoint"
+DBUS_PROPERTIES_GET="org.freedesktop.DBus.Properties.Get"
+
+dbus-send --system --print-reply --dest=$NM_SERVICE_NAME $NM_OBJECT_PATH $NM_GET_DEVICES
+
+
+dbus-send --system --print-reply --dest=$NM_SERVICE_NAME "$1" $DBUS_PROPERTIES_GET string:$DEVICE_IFACE string:"$2" | \
+
+
+dbus-send --system --print-reply --dest=$NM_SERVICE_NAME /org/freedesktop/NetworkManager/Devices/4 $DBUS_PROPERTIES_GET string:$DEVICE_IFACE string:"$2" 
+
+
+dbus-send --system --print-reply --dest=$NM_SERVICE_NAME /org/freedesktop/NetworkManager/Devices/4 
+org.freedesktop.NetworkManager.Device.Wireless
+
+GetAccessPoints 
+
+  dbus-send --system --print-reply --dest=$NM_SERVICE_NAME $NM_OBJECT_PATH $NM_GET_ACTIVE_ACCESS_POINT 

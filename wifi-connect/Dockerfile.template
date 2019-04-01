@@ -1,17 +1,33 @@
-FROM resin/%%RESIN_MACHINE_NAME%%-debian:buster
+FROM balenalib/%%RESIN_MACHINE_NAME%%-debian-python:3.7.2-stretch-build
+
+# python/raspberrypi3/debian/2.7/stretch
+ENV INITSYSTEM on
 
 RUN apt-get update \
-    && apt-get install -y dnsmasq wireless-tools \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get install -y dnsmasq wireless-tools network-manager
+RUN systemctl mask NetworkManager.service 
+RUN pip3 install python-networkmanager
+
+# TODO: put this back when we are happy with the performance
+#RUN apt-get clean \
+#    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app
 
-RUN curl -Ls https://github.com/resin-io/resin-wifi-connect/releases/download/v4.1.1/wifi-connect-v4.1.1-linux-%%RESIN_ARCH%%.tar.gz \
-    | tar -xvz -C /usr/src/app/
+#RUN curl https://api.github.com/repos/balena-io/wifi-connect/releases/latest -s \
+#    | grep -hoP 'browser_download_url": "\K.*%%RESIN_ARCH%%\.tar\.gz' \
+#    | xargs -n1 curl -Ls \
+#    | tar -xvz -C /usr/src/app/
 
-COPY start.sh .
+RUN curl https://sh.rustup.rs -sSf | sh
+COPY . ./
+COPY scripts/start.sh .
+COPY ui ui
+COPY deleteKnownNetworkConnections.py .
 
-ENV DBUS_SYSTEM_BUS_ADDRESS unix:path=/host/run/dbus/system_bus_socket
+RUN cargo build --release
+COPY 
+
+ENV DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
 CMD ["bash", "start.sh"]
