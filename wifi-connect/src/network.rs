@@ -1,7 +1,3 @@
-#[macro_use]
-extern crate log;
-
-
 use std::thread;
 use std::process;
 use std::time::Duration;

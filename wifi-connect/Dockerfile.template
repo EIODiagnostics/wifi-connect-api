@@ -23,6 +23,7 @@ RUN curl https://sh.rustup.rs -sSf > rustup-init \
     && chmod +x rustup-init \
     && ./rustup-init -y
 ENV PATH="$HOME/.cargo/bin:$PATH"
+ENV RUST_LOG=debug
 COPY . ./
 COPY scripts/start.sh .
 COPY ui ui
