@@ -22,13 +22,13 @@ WORKDIR /usr/src/app
 RUN curl https://sh.rustup.rs -sSf > rustup-init \
     && chmod +x rustup-init \
     && ./rustup-init -y
+PATH="$HOME/.cargo/bin:$PATH"
 COPY . ./
 COPY scripts/start.sh .
 COPY ui ui
 COPY deleteKnownNetworkConnections.py .
-ENV PATH="$HOME/.cargo/bin:$PATH"
-RUN cargo build --release
-RUN ls -R
+RUN ./buildRustApp.bash
+
 
 ENV DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
