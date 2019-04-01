@@ -22,7 +22,7 @@ WORKDIR /usr/src/app
 RUN curl https://sh.rustup.rs -sSf > rustup-init \
     && chmod +x rustup-init \
     && ./rustup-init -y
-PATH="$HOME/.cargo/bin:$PATH"
+ENV PATH="$HOME/.cargo/bin:$PATH"
 COPY . ./
 COPY scripts/start.sh .
 COPY ui ui
