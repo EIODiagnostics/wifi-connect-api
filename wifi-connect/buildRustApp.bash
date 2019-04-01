@@ -2,4 +2,4 @@
 
 source $HOME/.cargo/env
 cargo build --release
-ls -R
+\rm -rf target
