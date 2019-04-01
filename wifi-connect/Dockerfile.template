@@ -27,7 +27,7 @@ COPY scripts/start.sh .
 COPY ui ui
 COPY deleteKnownNetworkConnections.py .
 
-RUN source source $HOME/.cargo/env \
+RUN source $HOME/.cargo/env \
     && cargo build --release
 RUN ls -R
 
