@@ -1,10 +1,9 @@
 $(function(){
-	$.get(wifiConnectEndpoint() + '/ssid', function(data){
+	$.get(wifiConnectEndpoint() + '/networks', function(data){
 		if(data.length === 0){
 			$('.before-submit').hide();
 			$('#no-networks-message').removeClass('hidden');
 		} else {
-			$('#no-networks-message').addClass('hidden');
 			$.each(JSON.parse(data), function(i, val){
 				$("#ssid-select").append($('<option>').attr('val', val).text(val));
 			});
