@@ -5,7 +5,7 @@ $(function(){
 			$('#no-networks-message').removeClass('hidden');
 		} else {
 			$.each(JSON.parse(data), function(i, val){
-				$("#ssid-select").append($('<option>').attr('val', val).text(val));
+				$("#ssid-select").append($('<option>').attr('val', val.ssid).text(val.ssid);
 			});
 		}
 	});
