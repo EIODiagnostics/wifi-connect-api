@@ -8,7 +8,6 @@ exec 2>&1
 
 echo `date` " Script started"
 
-
 # check for active WiFi Connection regularly 
 while true; do
 

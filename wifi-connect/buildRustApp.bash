@@ -1,10 +1,9 @@
 #!/bin/bash
 
-curl https://sh.rustup.rs -sSf > rustup-init 
-chmod +x rustup-init
-./rustup-init -y
+curl https://sh.rustup.rs -sSf > rustup-init.bash
+chmod +x rustup-init.bash
+./rustup-init.bash -y
 
 source $HOME/.cargo/env
 cargo build --release > /dev/null 2>&1
-\rm -rf target
-ls
+cross cross-strip target/$TARGET/release/wifi-connect

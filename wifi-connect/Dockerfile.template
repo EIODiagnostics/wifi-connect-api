@@ -1,4 +1,19 @@
-FROM balenalib/%%RESIN_MACHINE_NAME%%-debian-python:3.7.2-stretch-build
+FROM balenalib/%%RESIN_MACHINE_NAME%%-debian-python:3.7.2-stretch-build AS buildstep
+
+COPY . /app
+WORKDIR /app
+
+ENV PATH="$HOME/.cargo/bin:$PATH"
+ENV RUST_LOG=debug
+RUN ./buildRustApp.bash
+
+#FROM balenalib/%%RESIN_MACHINE_NAME%%-debian-python:3.7.2-stretch-run
+
+RUN mkdir -p /usr/src/app/
+WORKDIR /usr/src/app
+
+COPY --from=buildstep /app/target/$TARGET/release/wifi-connect ./wifi-connect
+COPY scripts/start.sh ./start.sh
 
 ENV INITSYSTEM on
 ENV DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
@@ -10,21 +25,4 @@ RUN apt-get update \
 RUN systemctl mask NetworkManager.service 
 RUN pip3 install python-networkmanager
 
-WORKDIR /usr/src/app
-
-#RUN curl https://api.github.com/repos/balena-io/wifi-connect/releases/latest -s \
-#    | grep -hoP 'browser_download_url": "\K.*%%RESIN_ARCH%%\.tar\.gz' \
-#    | xargs -n1 curl -Ls \
-#    | tar -xvz -C /usr/src/app/
-
-ENV PATH="$HOME/.cargo/bin:$PATH"
-ENV RUST_LOG=debug
-COPY . ./
-COPY scripts/start.sh .
-COPY ui ui
-COPY deleteKnownNetworkConnections.py .
-RUN ./buildRustApp.bash
-
-
-
-CMD ["bash", "start.sh"]
+CMD ["bash", "/usr/src/app/start.sh"]
