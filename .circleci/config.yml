@@ -1,13 +1,12 @@
 build: &build
   docker:
-    - image: drjasonharrison-vp-eio/wifi-connect-$CIRCLE_JOB:rust-1.23.0
+    - image: drjasonharrison-vp-eio/wifi-connect-api-$CIRCLE_JOB:rust-1.23.0
 
       environment:
         BINARY: wifi-connect
         TARGET_OS: linux
 
   steps:
-
     - checkout
 
     - run: 
