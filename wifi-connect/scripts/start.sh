@@ -21,9 +21,8 @@ while true; do
     else
         printf 'Starting WiFi Connect\n'
         # Start wifi-connect  and make it exit if no interaction happens within 1 minute.
-        RUST_LOG=wifi-connect ./wifi-connect \
+        ./wifi-connect \
             --portal-ssid "EIO Camera ${RESIN_DEVICE_NAME_AT_INIT}" \
-            --activity-timeout 60 \
             --portal-listening-port 45454
     fi
 
