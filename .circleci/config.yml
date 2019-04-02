@@ -76,8 +76,8 @@ jobs:
     steps:
       - checkout
 
-      - run: cargo fmt -- --write-mode=diff
-      - run: cargo clippy -- -D warnings
+#      - run: cargo fmt -- --write-mode=diff
+#      - run: cargo clippy -- -D warnings
 
   deploy:
     docker:
