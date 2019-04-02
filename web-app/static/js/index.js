@@ -4,6 +4,7 @@ $(function(){
 			$('.before-submit').hide();
 			$('#no-networks-message').removeClass('hidden');
 		} else {
+			$('#debug').html(data);
 			$.each(JSON.parse(data), function(i, val){
 				$("#ssid-select").append($('<option>').attr('val', val.ssid).text(val.ssid);
 			});
