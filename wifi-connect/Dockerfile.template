@@ -7,7 +7,7 @@ ENV PATH="$HOME/.cargo/bin:$PATH"
 ENV RUST_LOG=debug
 RUN ./buildRustApp.bash
 
-FROM balenalib/%%RESIN_MACHINE_NAME%%-debian-python:3.7.2-stretch-run
+FROM balenalib/%%RESIN_MACHINE_NAME%%-debian-python:3.7.2-stretch-build
 
 RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app
