@@ -1,6 +1,6 @@
 build: &build
   docker:
-    - image: drjasonharrison/wifi-connect-$CIRCLE_JOB:rust-1.23.0
+    - image: drjasonharrison-vp-eio/wifi-connect-$CIRCLE_JOB:rust-1.23.0
 
       environment:
         BINARY: wifi-connect
@@ -73,7 +73,7 @@ jobs:
 
   test:
     docker:
-      - image: drjasonharrison/wifi-connect:rust-nightly-2018-01-08
+      - image: drjasonharrison-vp-eio/wifi-connect-apt:rust-nightly-2018-01-08
     steps:
       - checkout
 
@@ -82,7 +82,7 @@ jobs:
 
   deploy:
     docker:
-      - image: drjasonharrison/wifi-connect:rust-nightly-2018-01-08
+      - image: drjasonharrison-vp-eio/wifi-connect-api:rust-nightly-2018-01-08
 
     environment:
       GITHUB_USER: drjasonharrison-vp-eio
