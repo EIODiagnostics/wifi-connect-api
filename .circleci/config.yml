@@ -10,10 +10,12 @@ build: &build
 
     - checkout
 
-    - run: cargo build --release --target=$TARGET
+    - run: 
+        command: cargo build --release --target=$TARGET
         working_directory: wifi-connect
 
-    - run: cross-strip target/$TARGET/release/$BINARY
+    - run: 
+        command: cross-strip target/$TARGET/release/$BINARY
         working_directory: wifi-connect
 
     - run: |
@@ -21,13 +23,11 @@ build: &build
         if [ -z "$CIRCLE_TAG" ]; then VERSION="$CIRCLE_BRANCH-$(echo $CIRCLE_SHA1 | cut -c -7)"; fi
         echo "VERSION=$VERSION"
         echo "export VERSION=$VERSION" >> $BASH_ENV
-        working_directory: wifi-connect
 
     - run: |
         ARCHIVE_NAME="$BINARY-$VERSION-$TARGET_OS-$CIRCLE_JOB.tar.gz"
         echo "ARCHIVE_NAME=$ARCHIVE_NAME"
         echo "export ARCHIVE_NAME=$ARCHIVE_NAME" >> $BASH_ENV
-        working_directory: wifi-connect
 
     - run: |
         ARCHIVE_PATH="/tmp/dist/$ARCHIVE_NAME"
