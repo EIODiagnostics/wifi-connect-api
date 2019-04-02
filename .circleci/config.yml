@@ -1,6 +1,6 @@
 build: &build
   docker:
-    - image: circleci/rust:rust-1.23.0
+    - image: circleci/rust:rust-1.26.0
 
       environment:
         BINARY: wifi-connect
@@ -72,7 +72,7 @@ jobs:
 
   test:
     docker:
-      - image: circleci/rust:rust-1.23.0
+      - image: circleci/rust:rust-1.26.0
     steps:
       - checkout
 
@@ -81,7 +81,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/rust:rust-1.23.0
+      - image: circleci/rust:rust-1.26.0
 
     environment:
       GITHUB_USER: drjasonharrison-vp-eio
