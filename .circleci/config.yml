@@ -1,6 +1,6 @@
 build: &build
   docker:
-    - image: circleci/rust:rust-1.26.0
+    - image: circleci/rust:1.26.2
 
       environment:
         BINARY: wifi-connect
