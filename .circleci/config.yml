@@ -73,7 +73,7 @@ jobs:
 
   test:
     docker:
-      - image: drjasonharrison-vp-eio/wifi-connect-apt:rust-nightly-2018-01-08
+      - image: drjasonharrison-vp-eio/wifi-connect-api:rust-nightly-2018-01-08
     steps:
       - checkout
 
