@@ -7,43 +7,21 @@ sleep infinity
 # setup logging of this script /data/command.log
 mkdir -p /data
 readonly LOG_LOCATION=/data/command.log
-# if [ -f $LOG_LOCATION ]; then
-#   rm $LOG_LOCATION
-# fi
-exec &> >(tee -a -i $LOG_LOCATION)
-# exec 2>&1
+exec > >(tee -a -i $LOG_LOCATION)
+exec 2>&1
 
 echo `date` " Script started"
 
 
 # check for active WiFi Connection regularly 
 while true; do
-    # echo `date` "1. Is there a default gateway?"
-    # ip route | grep default
-
-    # 2. Is there Internet connectivity?
-    # nmcli -t g | grep full
-
-    echo `date` " 3. Is there Internet connectivity via a google ping?"
-    # wget --spider http://google.com 2>&1
-
-    # echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
-    # if [ $? -eq 0 ]; then
-    #     echo "Online"
-    # else
-    #     echo "Offline"
-    # fi
 
     wget "http://clients3.google.com/generate_204?" -O /dev/null 2>&1 | grep "204 No Content" > /dev/null
-    # if [ $? -eq 0 ]; then
-    #     echo "Online"
-    # else
-    #     echo "Offline"
-    # fi
-    # 4. Is there an active WiFi connection?
-    #iwgetid -r
+    haveInternetAccess=$?
+    iwgetid --raw
+    haveWifiAccess=$?
 
-    if [ $? -eq 0 ]; then
+    if [[ $haveInternetAccess -eq 0 && $haveWifiAccess -eq 0 ]]; then
         printf 'Skipping WiFi Connect\n'
     else
         printf 'Starting WiFi Connect\n'
