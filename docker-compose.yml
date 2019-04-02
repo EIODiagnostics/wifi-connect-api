@@ -1,4 +1,6 @@
-version: '2'
+version: "2.1"
+volumes:
+  shared-volume:
 services:
   wifi-connect:
     build: ./wifi-connect
@@ -6,8 +8,12 @@ services:
     privileged: true
     labels:
       io.resin.features.dbus: '1'
+    volumes:
+      - "shared-volume:/eio-data"
   web-app:
     build: ./web-app
     network_mode: "host"
     depends_on:
       - wifi-connect
+    volumes:
+      - "shared-volume:/eio-data"

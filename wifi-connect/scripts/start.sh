@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
 
-export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
-
-sleep infinity
-
-# setup logging of this script /data/command.log
-mkdir -p /data
-readonly LOG_LOCATION=/data/command.log
+# setup logging of this script /data/command-$.log
+mkdir -p /eio-data/log
+readonly LOG_LOCATION=/eio-data/log/runCommand-${RESIN_SERVICE_NAME}.log
 exec > >(tee -a -i $LOG_LOCATION)
 exec 2>&1
 

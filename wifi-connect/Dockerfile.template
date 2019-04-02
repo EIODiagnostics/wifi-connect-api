@@ -1,16 +1,14 @@
 FROM balenalib/%%RESIN_MACHINE_NAME%%-debian-python:3.7.2-stretch-build
 
-# python/raspberrypi3/debian/2.7/stretch
 ENV INITSYSTEM on
+ENV DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
 RUN apt-get update \
-    && apt-get install -y dnsmasq wireless-tools network-manager
+    && apt-get install -y dnsmasq wireless-tools network-manager\
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 RUN systemctl mask NetworkManager.service 
 RUN pip3 install python-networkmanager
-
-# TODO: put this back when we are happy with the performance
-#RUN apt-get clean \
-#    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app
 
@@ -19,9 +17,6 @@ WORKDIR /usr/src/app
 #    | xargs -n1 curl -Ls \
 #    | tar -xvz -C /usr/src/app/
 
-RUN curl https://sh.rustup.rs -sSf > rustup-init \
-    && chmod +x rustup-init \
-    && ./rustup-init -y
 ENV PATH="$HOME/.cargo/bin:$PATH"
 ENV RUST_LOG=debug
 COPY . ./
@@ -31,6 +26,5 @@ COPY deleteKnownNetworkConnections.py .
 RUN ./buildRustApp.bash
 
 
-ENV DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
 CMD ["bash", "start.sh"]
