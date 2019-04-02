@@ -72,7 +72,7 @@ jobs:
 
   test:
     docker:
-      - image: circleci/rust:rust-1.26.0
+      - image: circleci/rust:1.26.2
     steps:
       - checkout
 
@@ -81,7 +81,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/rust:rust-1.26.0
+      - image: circleci/rust:1.26.2
 
     environment:
       GITHUB_USER: drjasonharrison-vp-eio
