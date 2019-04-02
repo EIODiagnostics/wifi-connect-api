@@ -6,4 +6,4 @@ chmod +x rustup-init.bash
 
 source $HOME/.cargo/env
 cargo build --release > /dev/null 2>&1
-cross cross-strip target/$TARGET/release/wifi-connect
+# cross cross-strip target/$TARGET/release/wifi-connect
