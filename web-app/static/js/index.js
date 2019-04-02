@@ -4,9 +4,9 @@ $(function(){
 			$('.before-submit').hide();
 			$('#no-networks-message').removeClass('hidden');
 		} else {
-			$('#debug').html(data);
+			$('#debug').text(data);
 			$.each(JSON.parse(data), function(i, val){
-				$("#ssid-select").append($('<option>').attr('val', val.ssid).text(val.ssid);
+				$("#ssid-select").append($('<option>').attr('val', val).text(JSON.stringify(val));
 			});
 		}
 	});
