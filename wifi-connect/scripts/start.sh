@@ -9,13 +9,16 @@ source util.bash
 
 echolog "wifi-connect-api started"
 nmcli connection show | echolog
+nmcli c up edlab
 
 # check for active WiFi Connection regularly 
 while true; do
+    nmcli connection show | echolog
 
     wget "http://clients3.google.com/generate_204?" -O /dev/null 2>&1 | grep "204 No Content" > /dev/null
     haveInternetAccess=$?
     echolog "haveInternetAccess=$haveInternetAccess"
+    
     iwgetid --raw | echolog
     echolog "haveWifiAcces=$haveWifiAccess"
     haveWifiAccess=$?
