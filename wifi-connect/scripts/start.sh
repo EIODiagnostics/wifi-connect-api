@@ -5,30 +5,35 @@ mkdir -p /eio-data/log
 readonly LOG_LOCATION=/eio-data/log/runCommand-${RESIN_SERVICE_NAME}.log
 exec > >(tee -a -i $LOG_LOCATION)
 exec 2>&1
+source util.bash
 
-echo `date` " Script started"
+echolog "wifi-connect-api started"
+nmcli connection show | echolog
 
 # check for active WiFi Connection regularly 
 while true; do
 
     wget "http://clients3.google.com/generate_204?" -O /dev/null 2>&1 | grep "204 No Content" > /dev/null
     haveInternetAccess=$?
-    iwgetid --raw
+    echolog "haveInternetAccess=$haveInternetAccess"
+    iwgetid --raw | echolog
+    echolog "haveWifiAcces=$haveWifiAccess"
     haveWifiAccess=$?
 
     if [[ $haveInternetAccess -eq 0 && $haveWifiAccess -eq 0 ]]; then
-        printf 'Skipping WiFi Connect\n'
+        echolog 'Skipping WiFi Connect'
+        # wait 10 seconds before checking again for internet connectivity
+        sleep 10
     else
-        printf 'Starting WiFi Connect\n'
-        # Start wifi-connect  and make it exit if no interaction happens within 1 minute.
+        echolog 'Starting WiFi Connect'
+        # Start wifi-connect on a separate port
         ./wifi-connect \
             --portal-ssid "EIO Camera ${RESIN_DEVICE_NAME_AT_INIT}" \
             --portal-listening-port 45454
+        
+        wifiConnectExit=$?
+
+        echolog "wifi-connect exited with code $wifiConnectExit"
     fi
 
-    # Start your application here. In the background. 
-    echo "Use control-c to quit this script"
-
-    # wait 10 seconds before checking again for internet connectivity
-    sleep 10
 done
