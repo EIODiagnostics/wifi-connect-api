@@ -7,22 +7,35 @@ exec > >(tee -a -i $LOG_LOCATION)
 exec 2>&1
 source util.bash
 
+declare haveInternetAccess=1
+declare haveWifiAccess=1
+
 echolog "wifi-connect-api started"
 nmcli connection show | echolog
-nmcli c up edlab
+#nmcli c up edlab
+
+# TODO compare nmcl connection show against scan output
+
+
+checkForWifi() {
+    wget "http://clients3.google.com/generate_204?" -O /dev/null 2>&1 | grep "204 No Content" > /dev/null
+    haveInternetAccess=$?
+    echolog "haveInternetAccess=$haveInternetAccess"
+
+    iwgetid --raw | echolog
+    echolog "haveWifiAcces=$haveWifiAccess"
+    haveWifiAccess=$?
+    if [[ $haveInternetAccess -eq 0 && $haveWifiAccess -eq 0 ]]; then
+        echolog "have wifi internet access"
+        (( success++ ))
+    fi
+}
 
 # check for active WiFi Connection regularly 
 while true; do
     nmcli connection show | echolog
 
-    wget "http://clients3.google.com/generate_204?" -O /dev/null 2>&1 | grep "204 No Content" > /dev/null
-    haveInternetAccess=$?
-    echolog "haveInternetAccess=$haveInternetAccess"
-    
-    iwgetid --raw | echolog
-    echolog "haveWifiAcces=$haveWifiAccess"
-    haveWifiAccess=$?
-
+    checkForWifi
     if [[ $haveInternetAccess -eq 0 && $haveWifiAccess -eq 0 ]]; then
         echolog 'Skipping WiFi Connect'
         # wait 10 seconds before checking again for internet connectivity
