@@ -14,6 +14,7 @@ WORKDIR /usr/src/app
 
 COPY --from=buildstep /app/target/$TARGET/release/wifi-connect ./wifi-connect
 COPY scripts/start.sh ./start.sh
+COPY scripts/util.bash ./util.bash
 COPY deleteKnownNetworkConnections.py .
 
 ENV INITSYSTEM on
