@@ -6,7 +6,7 @@ echolog() {
     if [ $# -eq 0 ]; then 
         cat - | while read -r message
         do
-            echo "$(date +'[%Y-%m-%d %6N]') $message"
+            echo "$(date +'[%Y-%m-%d %T.%6N]') $message"
         done
     else
         echo "$(date +'[%Y-%m-%d %T.%6N]') $*"

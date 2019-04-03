@@ -11,11 +11,11 @@ echolog "$BASH_SOURCE started"
 declare haveInternetAccess=1
 declare haveWifiAccess=1
 
-
 # to connect to edlab:
 # nmcli c up edlab
 
-# TODO compare nmcli connection show against scan output
+# TODO compare nmcli connection show against scan output to select a known network
+# or to present known networks to the user
 
 main() {
     # check for active WiFi Connection regularly 
